@@ -38,7 +38,8 @@ interface EditAbsenceFormProps {
 export default function EditAbsenceForm({ absence, employees, absenceTypes }: EditAbsenceFormProps) {
   const router = useRouter();
   const updateAction = updateAbsence.bind(null, absence.id);
-  const [state, formAction, isPending] = useActionState(updateAction, {});
+  const initialState = { error: '' };
+  const [state, formAction, isPending] = useActionState(updateAction, initialState);
   const [isDeleting, setIsDeleting] = useState(false);
 
   const [selectedTypeId, setSelectedTypeId] = useState<number | null>(absence.absence_type_id);

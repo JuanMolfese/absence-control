@@ -5,7 +5,8 @@ import { loginAction } from './actions';
 import { Lock, Mail, Loader2 } from 'lucide-react';
 
 export default function LoginPage() {
-  const [state, formAction, isPending] = useActionState(loginAction, {});
+  const initialState = { error: '' };
+  const [state, formAction, isPending] = useActionState(loginAction, initialState);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 text-slate-900 p-4 relative overflow-hidden">

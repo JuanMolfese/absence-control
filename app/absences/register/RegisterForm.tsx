@@ -24,7 +24,8 @@ interface RegisterFormProps {
 }
 
 export default function RegisterForm({ employees, absenceTypes }: RegisterFormProps) {
-  const [state, formAction, isPending] = useActionState(registerAbsence, {});
+  const initialState = { error: '' };
+  const [state, formAction, isPending] = useActionState(registerAbsence, initialState);
   
   const [selectedTypeId, setSelectedTypeId] = useState<number | null>(null);
   const [requiresCert, setRequiresCert] = useState(false);

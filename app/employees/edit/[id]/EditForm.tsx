@@ -28,7 +28,8 @@ interface EditFormProps {
 export default function EditForm({ employee, departments }: EditFormProps) {
   // Enlazar el ID del empleado para que se pase automáticamente en la acción de servidor
   const updateAction = updateEmployee.bind(null, employee.id);
-  const [state, formAction, isPending] = useActionState(updateAction, {});
+  const initialState = { error: '' };
+  const [state, formAction, isPending] = useActionState(updateAction, initialState);
 
   return (
     <div className="max-w-2xl mx-auto space-y-6 animate-fade-in">

@@ -15,7 +15,8 @@ interface EmployeeFormProps {
 }
 
 export default function EmployeeForm({ departments }: EmployeeFormProps) {
-  const [state, formAction, isPending] = useActionState(createEmployee, {});
+  const initialState = { error: '' };
+  const [state, formAction, isPending] = useActionState(createEmployee, initialState);
 
   return (
     <div className="max-w-2xl mx-auto space-y-6 animate-fade-in">
