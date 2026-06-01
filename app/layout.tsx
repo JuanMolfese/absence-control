@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Absence Control - Sistema de Gestión",
+  title: "Sistema de Gestión",
   description: "Sistema genérico de control y reportes de ausentismo laboral y docente.",
 };
 
