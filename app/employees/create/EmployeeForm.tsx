@@ -15,7 +15,7 @@ interface EmployeeFormProps {
 }
 
 export default function EmployeeForm({ departments }: EmployeeFormProps) {
-  const [state, formAction, isPending] = useActionState(createEmployee, null);
+  const [state, formAction, isPending] = useActionState(createEmployee, {});
 
   return (
     <div className="max-w-2xl mx-auto space-y-6 animate-fade-in">
@@ -28,7 +28,7 @@ export default function EmployeeForm({ departments }: EmployeeFormProps) {
           <ArrowLeft className="w-4 h-4" />
         </Link>
         <div>
-          <h1 className="text-xl font-bold text-white">Registrar Nuevo Empleado</h1>
+          <h1 className="text-xl font-bold text-white">Registrar Nuevo Docente</h1>
           <p className="text-slate-400 text-xs mt-0.5">Ingresa los datos personales y laborales</p>
         </div>
       </div>
@@ -40,7 +40,7 @@ export default function EmployeeForm({ departments }: EmployeeFormProps) {
             {/* Nombre */}
             <div className="space-y-2">
               <label className="text-xs font-semibold text-slate-300 block" htmlFor="first_name">
-                Nombre(s) <span className="text-red-500">*</span>
+                Nombre<span className="text-red-500">*</span>
               </label>
               <input
                 id="first_name"
@@ -55,7 +55,7 @@ export default function EmployeeForm({ departments }: EmployeeFormProps) {
             {/* Apellido */}
             <div className="space-y-2">
               <label className="text-xs font-semibold text-slate-300 block" htmlFor="last_name">
-                Apellido(s) <span className="text-red-500">*</span>
+                Apellido<span className="text-red-500">*</span>
               </label>
               <input
                 id="last_name"
@@ -70,7 +70,7 @@ export default function EmployeeForm({ departments }: EmployeeFormProps) {
             {/* Legajo */}
             <div className="space-y-2">
               <label className="text-xs font-semibold text-slate-300 block" htmlFor="file_number">
-                Número de Legajo / Ficha <span className="text-red-500">*</span>
+                Número de Legajo<span className="text-red-500">*</span>
               </label>
               <input
                 id="file_number"
@@ -85,7 +85,7 @@ export default function EmployeeForm({ departments }: EmployeeFormProps) {
             {/* Departamento */}
             <div className="space-y-2">
               <label className="text-xs font-semibold text-slate-300 block" htmlFor="department_id">
-                Departamento / Área <span className="text-red-500">*</span>
+                Área <span className="text-red-500">*</span>
               </label>
               <select
                 id="department_id"
@@ -133,7 +133,7 @@ export default function EmployeeForm({ departments }: EmployeeFormProps) {
             <button
               type="submit"
               disabled={isPending}
-              className="flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold text-xs transition-all disabled:opacity-75"
+              className="flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-gradient-to-r from-emerald-800 to-emerald-600 hover:from-emerald-700 hover:to-emerald-500 text-white font-semibold text-xs transition-all disabled:opacity-75"
             >
               {isPending ? (
                 <>
@@ -143,7 +143,7 @@ export default function EmployeeForm({ departments }: EmployeeFormProps) {
               ) : (
                 <>
                   <Save className="w-4 h-4" />
-                  <span>Guardar Empleado</span>
+                  <span>Guardar Docente</span>
                 </>
               )}
             </button>

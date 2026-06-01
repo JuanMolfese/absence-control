@@ -2,7 +2,7 @@ import sql from '@/lib/db';
 import { getSession } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 import ReportsClient from './ReportsClient';
-import { FileSpreadsheet, FileText, Calendar, Filter, Users, ShieldAlert } from 'lucide-react';
+/* import { FileSpreadsheet, FileText, Calendar, Filter, Users, ShieldAlert } from 'lucide-react'; */
 import Link from 'next/link';
 
 export default async function ReportsPage({
@@ -45,7 +45,7 @@ export default async function ReportsPage({
     if (deptInfo) selectedDeptName = deptInfo.name;
   }
 
-  let selectedEmpName = 'Todos los Empleados';
+  let selectedEmpName = 'Todos los Docentes';
   if (empFilter) {
     const empInfo = employees.find(e => e.id === empFilter);
     if (empInfo) selectedEmpName = `${empInfo.last_name}, ${empInfo.first_name}`;
@@ -117,46 +117,49 @@ export default async function ReportsPage({
     <div className="space-y-6 animate-fade-in">
       {/* Header */}
       <div>
-        <h1 className="text-xl font-bold text-white">Centro de Reportes y Descargas</h1>
-        <p className="text-slate-400 text-xs mt-0.5">
+        <h1 className="text-xl font-bold text-slate-900">Centro de Reportes y Descargas</h1>
+        <p className="text-slate-600 text-xs mt-0.5">
           Filtra periodos y genera exportaciones de inasistencias en Excel y PDF
         </p>
       </div>
 
       {/* Panel de Filtros */}
-      <div className="bg-slate-900 border border-slate-800/80 rounded-2xl p-5 shadow-lg">
+      <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
         <form method="GET" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {/* Fecha Inicio */}
           <div className="space-y-1">
-            <label className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Fecha Desde</label>
+            <label className="text-[10px] font-semibold text-slate-700 uppercase tracking-wider">Fecha Desde</label>
             <input
               type="date"
+              title="Filtrar por fecha de inicio del periodo de ausencia"
               name="start_date"
               defaultValue={startDateStr}
               required
-              className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 text-white px-3 py-2 rounded-xl text-xs outline-none transition-all"
+              className="w-full bg-slate-50 border border-slate-300 focus:border-emerald-700 text-slate-900 px-3 py-2 rounded-xl text-xs outline-none transition-all"
             />
           </div>
 
           {/* Fecha Fin */}
           <div className="space-y-1">
-            <label className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Fecha Hasta</label>
+            <label className="text-[10px] font-semibold text-slate-700 uppercase tracking-wider">Fecha Hasta</label>
             <input
               type="date"
+              title="Filtrar por fecha de fin del periodo de ausencia"
               name="end_date"
               defaultValue={endDateStr}
               required
-              className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 text-white px-3 py-2 rounded-xl text-xs outline-none transition-all"
+              className="w-full bg-slate-50 border border-slate-300 focus:border-emerald-700 text-slate-900 px-3 py-2 rounded-xl text-xs outline-none transition-all"
             />
           </div>
 
           {/* Departamento */}
           <div className="space-y-1">
-            <label className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Departamento / Área</label>
+            <label className="text-[10px] font-semibold text-slate-700 uppercase tracking-wider">Departamento / Área</label>
             <select
               name="dept"
+              title="Filtrar por Departamento / Área"
               defaultValue={deptFilter}
-              className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 text-white px-3 py-2 rounded-xl text-xs outline-none transition-all"
+              className="w-full bg-slate-50 border border-slate-300 focus:border-emerald-700 text-slate-900 px-3 py-2 rounded-xl text-xs outline-none transition-all"
             >
               <option value="">Todos los Departamentos</option>
               {departments.map(d => (
@@ -167,13 +170,14 @@ export default async function ReportsPage({
 
           {/* Empleado */}
           <div className="space-y-1">
-            <label className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Empleado / Docente</label>
+            <label className="text-[10px] font-semibold text-slate-700 uppercase tracking-wider">Empleado / Docente</label>
             <select
               name="emp"
+              title="Filtrar por Docente"
               defaultValue={empFilter}
-              className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 text-white px-3 py-2 rounded-xl text-xs outline-none transition-all"
+              className="w-full bg-slate-50 border border-slate-300 focus:border-emerald-700 text-slate-900 px-3 py-2 rounded-xl text-xs outline-none transition-all"
             >
-              <option value="">Todos los Empleados</option>
+              <option value="">Todos los Docentes</option>
               {employees.map(e => (
                 <option key={e.id} value={e.id}>{e.last_name}, {e.first_name} ({e.file_number})</option>
               ))}
@@ -181,18 +185,18 @@ export default async function ReportsPage({
           </div>
 
           {/* Botones de acción */}
-          <div className="md:col-span-2 lg:col-span-4 flex justify-end gap-2 pt-2 border-t border-slate-800/40">
+          <div className="md:col-span-2 lg:col-span-4 flex justify-end gap-2 pt-2 border-t border-slate-200">
             {(resolvedParams.start_date || resolvedParams.end_date || resolvedParams.dept || resolvedParams.emp) && (
               <Link
                 href="/reports"
-                className="bg-slate-950 hover:bg-slate-900 border border-slate-800 text-slate-400 hover:text-slate-200 py-2 px-4 rounded-xl text-xs font-semibold flex items-center justify-center transition-all"
+                className="bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-600 hover:text-slate-900 py-2 px-4 rounded-xl text-xs font-semibold flex items-center justify-center transition-all"
               >
                 Valores por Defecto
               </Link>
             )}
             <button
               type="submit"
-              className="bg-slate-850 hover:bg-slate-750 text-slate-200 hover:text-white py-2 px-5 rounded-xl text-xs font-semibold border border-slate-750 transition-all shadow-sm"
+              className="bg-slate-200 hover:bg-slate-300 text-slate-700 hover:text-slate-900 py-2 px-5 rounded-xl text-xs font-semibold border border-slate-300 transition-all shadow-sm"
             >
               Generar Reporte
             </button>
@@ -202,28 +206,28 @@ export default async function ReportsPage({
 
       {/* Grid de Resumen del Reporte Filtrado */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-slate-900 border border-slate-800/80 rounded-2xl p-5 text-center">
-          <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Total Ausencias</span>
-          <p className="text-2xl font-bold text-white mt-1">{totalAusencias}</p>
+        <div className="bg-white border border-slate-200 rounded-2xl p-5 text-center shadow-sm">
+          <span className="text-[10px] font-semibold text-slate-700 uppercase tracking-wider">Total Ausencias</span>
+          <p className="text-2xl font-bold text-slate-900 mt-1">{totalAusencias}</p>
         </div>
-        <div className="bg-slate-900 border border-slate-800/80 rounded-2xl p-5 text-center">
-          <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Días Acumulados</span>
-          <p className="text-2xl font-bold text-indigo-400 mt-1">{totalDias}</p>
+        <div className="bg-white border border-slate-200 rounded-2xl p-5 text-center shadow-sm">
+          <span className="text-[10px] font-semibold text-slate-700 uppercase tracking-wider">Días Acumulados</span>
+          <p className="text-2xl font-bold text-emerald-700 mt-1">{totalDias}</p>
         </div>
-        <div className="bg-slate-900 border border-slate-800/80 rounded-2xl p-5 text-center">
-          <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Certificados Pendientes</span>
-          <p className={`text-2xl font-bold mt-1 ${certificadosPendientes > 0 ? 'text-rose-400 animate-pulse' : 'text-emerald-400'}`}>
+        <div className="bg-white border border-slate-200 rounded-2xl p-5 text-center shadow-sm">
+          <span className="text-[10px] font-semibold text-slate-700 uppercase tracking-wider">Certificados Pendientes</span>
+          <p className={`text-2xl font-bold mt-1 ${certificadosPendientes > 0 ? 'text-red-600 animate-pulse' : 'text-emerald-700'}`}>
             {certificadosPendientes}
           </p>
         </div>
       </div>
 
       {/* Acciones de Descarga y Vista Previa */}
-      <div className="bg-slate-900 border border-slate-800/80 rounded-2xl p-6 space-y-6 shadow-xl">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-slate-800/60">
+      <div className="bg-white border border-slate-200 rounded-2xl p-6 space-y-6 shadow-sm">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-slate-200">
           <div>
-            <h3 className="text-md font-bold text-white">Exportaciones Disponibles</h3>
-            <p className="text-slate-400 text-xs mt-0.5">Descarga el reporte en tu formato de preferencia</p>
+            <h3 className="text-md font-bold text-slate-900">Exportaciones Disponibles</h3>
+            <p className="text-slate-600 text-xs mt-0.5">Descarga el reporte en tu formato de preferencia</p>
           </div>
           
           <ReportsClient
@@ -237,19 +241,19 @@ export default async function ReportsPage({
 
         {/* Vista previa de los datos a descargar */}
         <div>
-          <h4 className="text-xs font-bold text-slate-300 mb-4">Vista Previa del Reporte</h4>
+          <h4 className="text-xs font-bold text-slate-800 mb-4">Vista Previa del Reporte</h4>
           
-          <div className="overflow-x-auto rounded-xl border border-slate-800/80">
+          <div className="overflow-x-auto rounded-xl border border-slate-200">
             {absences.length === 0 ? (
               <div className="py-12 text-center text-slate-500">
-                <p className="text-xs">No hay datos de ausencias para el rango y filtros seleccionados.</p>
+                <p className="text-xs text-slate-700">No hay datos de ausencias para el rango y filtros seleccionados.</p>
               </div>
             ) : (
               <table className="w-full text-left text-xs border-collapse">
                 <thead>
-                  <tr className="bg-slate-950/60 text-slate-400 font-semibold uppercase border-b border-slate-800">
+                  <tr className="bg-slate-50 text-slate-700 font-semibold uppercase border-b border-slate-200">
                     <th className="py-3 px-4">Legajo</th>
-                    <th className="py-3 px-4">Empleado</th>
+                    <th className="py-3 px-4">Docente</th>
                     <th className="py-3 px-4">Departamento</th>
                     <th className="py-3 px-4">Motivo</th>
                     <th className="py-3 px-4">Periodo</th>
@@ -257,24 +261,24 @@ export default async function ReportsPage({
                     <th className="py-3 px-4 text-center">Certificado</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-800/50 text-slate-300">
+                <tbody className="divide-y divide-slate-200 text-slate-700">
                   {absences.map((ab, i) => (
-                    <tr key={ab.id || i} className="hover:bg-slate-850/20 transition-colors">
-                      <td className="py-3 px-4 font-mono font-medium text-slate-400">{ab.file_number}</td>
-                      <td className="py-3 px-4 font-semibold text-white">{ab.last_name}, {ab.first_name}</td>
-                      <td className="py-3 px-4 text-slate-400">{ab.department_name}</td>
-                      <td className="py-3 px-4">{ab.absence_type_name}</td>
-                      <td className="py-3 px-4">
+                    <tr key={ab.id || i} className="hover:bg-slate-50/60 transition-colors">
+                      <td className="py-3 px-4 font-mono font-medium text-slate-600">{ab.file_number}</td>
+                      <td className="py-3 px-4 font-semibold text-slate-900">{ab.last_name}, {ab.first_name}</td>
+                      <td className="py-3 px-4 text-slate-600">{ab.department_name}</td>
+                      <td className="py-3 px-4 text-slate-700">{ab.absence_type_name}</td>
+                      <td className="py-3 px-4 text-slate-700">
                         {formatDate(ab.start_date)} al {formatDate(ab.end_date)}
                       </td>
-                      <td className="py-3 px-4 text-center font-bold">{ab.total_days}</td>
+                      <td className="py-3 px-4 text-center font-bold text-slate-800">{ab.total_days}</td>
                       <td className="py-3 px-4 text-center">
                         {!ab.requires_certificate ? (
-                          <span className="text-[9px] text-slate-500 bg-slate-950 px-2 py-0.5 rounded border border-slate-800">N/A</span>
+                          <span className="text-[9px] text-slate-600 bg-slate-200 px-2 py-0.5 rounded border border-slate-300">N/A</span>
                         ) : ab.certificate_attached ? (
-                          <span className="text-[9px] text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20 font-medium">Entregado</span>
+                          <span className="text-[9px] text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full border border-emerald-200 font-medium">Entregado</span>
                         ) : (
-                          <span className="text-[9px] text-rose-400 bg-rose-500/10 px-2 py-0.5 rounded-full border border-rose-500/20 font-medium">Pendiente</span>
+                          <span className="text-[9px] text-red-700 bg-red-100 px-2 py-0.5 rounded-full border border-red-200 font-medium">Pendiente</span>
                         )}
                       </td>
                     </tr>

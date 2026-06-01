@@ -30,15 +30,15 @@ export default async function RootLayout({
   return (
     <html
       lang="es"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full bg-slate-950 text-slate-100 flex flex-col">
+      <body className="min-h-full bg-slate-50 text-slate-900 flex flex-col">
         {session ? (
           <div className="flex flex-row min-h-screen">
             <Sidebar session={session} />
             <div className="flex-1 flex flex-col min-w-0">
               <Navbar session={session} />
-              <main className="flex-1 p-8 overflow-y-auto">
+              <main className="flex-1 p-8 overflow-y-auto bg-gradient-to-br from-slate-50 to-slate-100">
                 {children}
               </main>
             </div>

@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   },
   metaValue: {
     fontWeight: 'bold',
-    color: '#60a5fa', // blue-400
+    color: '#166534', // emerald-800
   },
   sectionTitle: {
     fontSize: 11,
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
   summaryCardValue: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#2563eb', // blue-600
+    color: '#065f46', // emerald-800 darker
   },
   summaryCardLabel: {
     fontSize: 7,
@@ -201,7 +201,7 @@ export default function AbsencePDFReport({
         <View style={styles.headerBanner}>
           <View>
             <Text style={styles.headerTitle}>Reporte de Ausentismo</Text>
-            <Text style={styles.headerSubtitle}>Generado por el Sistema de Control de Ausencias</Text>
+            <Text style={styles.headerSubtitle}>Generado por el Sistema de Control de Ausencias de E.P. n° 15 de Tres Arroyos</Text>
           </View>
           <View>
             <Text style={styles.headerMeta}>
@@ -236,7 +236,7 @@ export default function AbsencePDFReport({
         <View style={styles.table}>
           {/* Header de la Tabla */}
           <View style={styles.tableRowHeader}>
-            <Text style={[styles.tableCellHeader, styles.colEmpleado]}>Empleado</Text>
+            <Text style={[styles.tableCellHeader, styles.colEmpleado]}>Docente</Text>
             <Text style={[styles.tableCellHeader, styles.colDpto]}>Departamento</Text>
             <Text style={[styles.tableCellHeader, styles.colMotivo]}>Motivo de Ausencia</Text>
             <Text style={[styles.tableCellHeader, styles.colPeriodo]}>Periodo</Text>

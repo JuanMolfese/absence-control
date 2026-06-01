@@ -24,7 +24,7 @@ interface RegisterFormProps {
 }
 
 export default function RegisterForm({ employees, absenceTypes }: RegisterFormProps) {
-  const [state, formAction, isPending] = useActionState(registerAbsence, null);
+  const [state, formAction, isPending] = useActionState(registerAbsence, {});
   
   const [selectedTypeId, setSelectedTypeId] = useState<number | null>(null);
   const [requiresCert, setRequiresCert] = useState(false);
@@ -54,30 +54,30 @@ export default function RegisterForm({ employees, absenceTypes }: RegisterFormPr
       <div className="flex items-center gap-4">
         <Link
           href="/absences"
-          className="p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-white transition-all"
+          className="p-2 rounded-lg bg-green-800 text-slate-400 hover:text-white transition-all"
         >
-          <ArrowLeft className="w-4 h-4" />
+          <ArrowLeft className="w-4 h-4 text-white" />
         </Link>
         <div>
-          <h1 className="text-xl font-bold text-white">Registrar Ausencia</h1>
+          <h1 className="text-xl font-bold text-black">Registrar Ausencia</h1>
           <p className="text-slate-400 text-xs mt-0.5">Ingresa una nueva licencia o inasistencia del personal</p>
         </div>
       </div>
 
       {/* Form Card */}
-      <div className="bg-slate-900 border border-slate-800/80 rounded-2xl p-6 shadow-xl">
+      <div className="bg-gray-100 border border-slate-800/80 rounded-2xl p-6 shadow-xl">
         <form action={formAction} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Empleado */}
             <div className="space-y-2 md:col-span-2">
-              <label className="text-xs font-semibold text-slate-300 block" htmlFor="employee_id">
-                Empleado / Docente <span className="text-red-500">*</span>
+              <label className="text-xs font-semibold text-slate-800 block" htmlFor="employee_id">
+                Docente <span className="text-red-500">*</span>
               </label>
               <select
                 id="employee_id"
                 name="employee_id"
                 required
-                className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-white px-4 py-2.5 rounded-xl text-xs outline-none transition-all"
+                className="w-full bg-gray-50 border border-slate-800 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-gray-800 px-4 py-2.5 rounded-xl text-xs outline-none transition-all"
               >
                 <option value="">Selecciona al personal ausente...</option>
                 {employees.map((emp) => (
@@ -90,7 +90,7 @@ export default function RegisterForm({ employees, absenceTypes }: RegisterFormPr
 
             {/* Tipo de Ausencia */}
             <div className="space-y-2 md:col-span-2">
-              <label className="text-xs font-semibold text-slate-300 block" htmlFor="absence_type_id">
+              <label className="text-xs font-semibold text-slate-800 block" htmlFor="absence_type_id">
                 Motivo de Ausencia <span className="text-red-500">*</span>
               </label>
               <select
@@ -98,7 +98,7 @@ export default function RegisterForm({ employees, absenceTypes }: RegisterFormPr
                 name="absence_type_id"
                 required
                 onChange={(e) => setSelectedTypeId(e.target.value ? parseInt(e.target.value) : null)}
-                className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-white px-4 py-2.5 rounded-xl text-xs outline-none transition-all"
+                className="w-full bg-gray-50 border border-slate-800 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-gray-800 px-4 py-2.5 rounded-xl text-xs outline-none transition-all"
               >
                 <option value="">Selecciona el motivo...</option>
                 {absenceTypes.map((type) => (
@@ -111,7 +111,7 @@ export default function RegisterForm({ employees, absenceTypes }: RegisterFormPr
 
             {/* Fecha de Inicio */}
             <div className="space-y-2">
-              <label className="text-xs font-semibold text-slate-300 block" htmlFor="start_date">
+              <label className="text-xs font-semibold text-slate-800 block" htmlFor="start_date">
                 Fecha de Inicio <span className="text-red-500">*</span>
               </label>
               <input
@@ -120,13 +120,13 @@ export default function RegisterForm({ employees, absenceTypes }: RegisterFormPr
                 type="date"
                 required
                 defaultValue={getTodayString()}
-                className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-white px-4 py-2.5 rounded-xl text-xs outline-none transition-all"
+                className="w-full bg-gray-50 border border-slate-800 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-gray-800 px-4 py-2.5 rounded-xl text-xs outline-none transition-all"
               />
             </div>
 
             {/* Fecha de Fin */}
             <div className="space-y-2">
-              <label className="text-xs font-semibold text-slate-300 block" htmlFor="end_date">
+              <label className="text-xs font-semibold text-slate-800 block" htmlFor="end_date">
                 Fecha de Fin <span className="text-red-500">*</span>
               </label>
               <input
@@ -135,25 +135,25 @@ export default function RegisterForm({ employees, absenceTypes }: RegisterFormPr
                 type="date"
                 required
                 defaultValue={getTodayString()}
-                className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-white px-4 py-2.5 rounded-xl text-xs outline-none transition-all"
+                className="w-full bg-gray-50 border border-slate-800 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-gray-800 px-4 py-2.5 rounded-xl text-xs outline-none transition-all"
               />
             </div>
 
             {/* Certificado (Mostrar solo si aplica) */}
             {requiresCert && (
-              <div className="space-y-3 md:col-span-2 p-4 bg-slate-950/80 border border-slate-800 rounded-xl animate-fade-in">
+              <div className="space-y-3 md:col-span-2 p-4 bg-green-800 border border-slate-800 rounded-xl animate-fade-in">
                 <div className="flex items-start gap-2.5">
-                  <AlertCircle className="w-5 h-5 text-indigo-400 shrink-0 mt-0.5" />
+                  <AlertCircle className="w-5 h-5 text-white shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="text-xs font-bold text-slate-200">Justificación médica requerida</h4>
-                    <p className="text-[10px] text-slate-500 mt-0.5">
+                    <h4 className="text-xs font-bold text-white">Justificación médica requerida</h4>
+                    <p className="text-[10px] text-white mt-0.5">
                       Este tipo de licencia requiere la presentación física o digital de un certificado médico justificante.
                     </p>
                   </div>
                 </div>
 
-                <div className="pt-2 border-t border-slate-900/60">
-                  <label className="text-xs font-semibold text-slate-300 block mb-1">
+                <div className="pt-2 border-t border-green-600/60">
+                  <label className="text-xs font-semibold text-white block mb-1">
                     ¿El certificado ya fue presentado?
                   </label>
                   <div className="flex gap-4">
@@ -183,7 +183,7 @@ export default function RegisterForm({ employees, absenceTypes }: RegisterFormPr
 
             {/* Observaciones */}
             <div className="space-y-2 md:col-span-2">
-              <label className="text-xs font-semibold text-slate-300 block" htmlFor="reason">
+              <label className="text-xs font-semibold text-slate-800 block" htmlFor="reason">
                 Observaciones / Detalles
               </label>
               <textarea
@@ -191,7 +191,7 @@ export default function RegisterForm({ employees, absenceTypes }: RegisterFormPr
                 name="reason"
                 rows={3}
                 placeholder="Ingresa diagnósticos, número de consulta, u otros detalles relevantes de la ausencia..."
-                className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-white px-4 py-2.5 rounded-xl text-xs outline-none transition-all resize-none"
+                className="w-full bg-gray-50 border border-slate-800 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-gray-800 px-4 py-2.5 rounded-xl text-xs outline-none transition-all resize-none"
               />
             </div>
           </div>
@@ -205,14 +205,14 @@ export default function RegisterForm({ employees, absenceTypes }: RegisterFormPr
           <div className="flex gap-4 pt-4 border-t border-slate-800/80">
             <Link
               href="/absences"
-              className="flex-1 text-center py-2.5 px-4 rounded-xl border border-slate-800 hover:bg-slate-850 text-slate-300 hover:text-white font-semibold text-xs transition-all"
+              className="flex-1 text-center py-2.5 px-4 rounded-xl border border-slate-800 hover:bg-slate-850 text-slate-800 hover:text-green-700 font-semibold text-xs transition-all"
             >
               Cancelar
             </Link>
             <button
               type="submit"
               disabled={isPending}
-              className="flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold text-xs transition-all disabled:opacity-75"
+              className="flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-gradient-to-r from-emerald-800 to-emerald-600 hover:from-emerald-700 hover:to-emerald-500 text-white font-semibold text-xs transition-all disabled:opacity-75"
             >
               {isPending ? (
                 <>

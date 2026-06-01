@@ -5,7 +5,11 @@ import { getSession } from '@/lib/auth';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
-export async function createEmployee(prevState: any, formData: FormData) {
+interface EmployeeState {
+  error?: string;
+}
+
+export async function createEmployee(prevState: EmployeeState | null, formData: FormData) {
   const session = await getSession();
   if (!session || session.role !== 'admin') {
     return { error: 'No autorizado para realizar esta acción.' };
@@ -54,7 +58,7 @@ export async function createEmployee(prevState: any, formData: FormData) {
     `;
 
   } catch (error) {
-    console.error('Error al crear empleado:', error);
+    console.error('Error al crear docente:', error);
     return { error: 'Ocurrió un error al guardar en la base de datos.' };
   }
 
@@ -62,7 +66,7 @@ export async function createEmployee(prevState: any, formData: FormData) {
   redirect('/employees');
 }
 
-export async function updateEmployee(id: string, prevState: any, formData: FormData) {
+export async function updateEmployee(id: string, prevState: EmployeeState | null, formData: FormData) {
   const session = await getSession();
   if (!session || session.role !== 'admin') {
     return { error: 'No autorizado para realizar esta acción.' };
@@ -85,7 +89,7 @@ export async function updateEmployee(id: string, prevState: any, formData: FormD
       SELECT id FROM employees WHERE file_number = ${fileNumber.trim()} AND id != ${id}
     `;
     if (existingFile.length > 0) {
-      return { error: 'El número de legajo ya está registrado en otro empleado.' };
+      return { error: 'El número de legajo ya está registrado en otro docente.' };
     }
 
     // Verificar que el correo no esté duplicado por otro empleado
@@ -94,11 +98,11 @@ export async function updateEmployee(id: string, prevState: any, formData: FormD
         SELECT id FROM employees WHERE email = ${email.toLowerCase().trim()} AND id != ${id}
       `;
       if (existingEmail.length > 0) {
-        return { error: 'El correo electrónico ya está registrado en otro empleado.' };
+        return { error: 'El correo electrónico ya está registrado en otro docente.' };
       }
     }
 
-    // Actualizar empleado
+    // Actualizar docente
     await sql`
       UPDATE employees 
       SET 
@@ -112,7 +116,7 @@ export async function updateEmployee(id: string, prevState: any, formData: FormD
     `;
 
   } catch (error) {
-    console.error('Error al actualizar empleado:', error);
+    console.error('Error al actualizar docente:', error);
     return { error: 'Ocurrió un error al guardar los cambios.' };
   }
 

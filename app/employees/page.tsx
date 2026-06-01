@@ -38,28 +38,28 @@ export default async function EmployeesPage({
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-xl font-bold text-white">Gestión de Empleados / Docentes</h1>
-          <p className="text-slate-400 text-xs mt-0.5">
+          <h1 className="text-xl font-bold text-slate-900">Gestión de Docentes</h1>
+          <p className="text-slate-600 text-xs mt-0.5">
             Listado y administración de todo el personal registrado
           </p>
         </div>
         {session.role === 'admin' && (
           <Link
             href="/employees/create"
-            className="flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold text-xs transition-all duration-200 shadow-md shadow-indigo-600/10"
+            className="flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-gradient-to-r from-emerald-800 to-emerald-600 hover:from-emerald-700 hover:to-emerald-500 text-white font-semibold text-xs transition-all duration-200 shadow-md shadow-emerald-600/10"
           >
             <Plus className="w-4 h-4" />
-            <span>Nuevo Empleado / Docente</span>
+            <span>Nuevo Docente</span>
           </Link>
         )}
       </div>
 
       {/* Filtros y Búsqueda */}
-      <div className="bg-slate-900 border border-slate-800/80 rounded-2xl p-4">
+      <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
         <form method="GET" className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {/* Input de Búsqueda */}
           <div className="relative">
-            <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-500">
+            <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400">
               <Search className="w-4 h-4" />
             </span>
             <input
@@ -67,19 +67,20 @@ export default async function EmployeesPage({
               name="q"
               defaultValue={q}
               placeholder="Buscar por nombre, apellido o legajo..."
-              className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-white pl-9 pr-4 py-2 rounded-xl text-xs outline-none transition-all"
+              className="w-full bg-slate-50 border border-slate-300 focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700 text-slate-900 pl-9 pr-4 py-2 rounded-xl text-xs outline-none transition-all"
             />
           </div>
 
           {/* Filtro de Departamento */}
           <div className="relative">
-            <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-500">
+            <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400">
               <Filter className="w-4 h-4" />
             </span>
             <select
               name="dept"
+              title="Filtrar por Departamento / Área"
               defaultValue={deptFilter}
-              className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-white pl-9 pr-4 py-2 rounded-xl text-xs outline-none transition-all appearance-none"
+              className="w-full bg-slate-50 border border-slate-300 focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700 text-slate-900 pl-9 pr-4 py-2 rounded-xl text-xs outline-none transition-all appearance-none"
             >
               <option value="">Todos los Departamentos</option>
               {departments.map((dept) => (
@@ -94,14 +95,14 @@ export default async function EmployeesPage({
           <div className="flex gap-2">
             <button
               type="submit"
-              className="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white py-2 px-4 rounded-xl text-xs font-semibold border border-slate-750 transition-all"
+              className="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-900 py-2 px-4 rounded-xl text-xs font-semibold border border-slate-300 transition-all"
             >
               Aplicar Filtros
             </button>
             {(q || deptFilter) && (
               <Link
                 href="/employees"
-                className="bg-slate-950 hover:bg-slate-900 border border-slate-800 text-slate-400 hover:text-slate-200 py-2 px-4 rounded-xl text-xs font-semibold flex items-center justify-center transition-all"
+                className="bg-white hover:bg-slate-50 border border-slate-300 text-slate-600 hover:text-slate-900 py-2 px-4 rounded-xl text-xs font-semibold flex items-center justify-center transition-all"
               >
                 Limpiar
               </Link>
@@ -111,39 +112,39 @@ export default async function EmployeesPage({
       </div>
 
       {/* Tabla de Resultados */}
-      <div className="bg-slate-900 border border-slate-800/80 rounded-2xl overflow-hidden">
+      <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
         {employees.length === 0 ? (
           <div className="py-16 text-center text-slate-500 flex flex-col items-center justify-center">
-            <Users className="w-12 h-12 text-slate-700 mb-3" />
-            <p className="text-sm font-semibold">No se encontraron empleados</p>
+            <Users className="w-12 h-12 text-slate-300 mb-3" />
+            <p className="text-sm font-semibold text-slate-700">No se encontraron docentes</p>
             <p className="text-xs text-slate-600 mt-1">Prueba a cambiar los filtros de búsqueda</p>
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs border-collapse">
               <thead>
-                <tr className="border-b border-slate-800/85 text-slate-400 font-semibold uppercase bg-slate-950/30">
-                  <th className="py-4 px-6">Legajo / N° Ficha</th>
+                <tr className="border-b border-slate-200 text-slate-700 font-semibold uppercase bg-slate-50">
+                  <th className="py-4 px-6">Legajo</th>
                   <th className="py-4 px-6">Apellido y Nombre</th>
-                  <th className="py-4 px-6">Departamento / Área</th>
+                  <th className="py-4 px-6">Área</th>
                   <th className="py-4 px-6">Contacto</th>
                   <th className="py-4 px-6 text-center">Estado</th>
                   {session.role === 'admin' && <th className="py-4 px-6 text-right">Acciones</th>}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/50 text-slate-300">
+              <tbody className="divide-y divide-slate-200 text-slate-700">
                 {employees.map((emp) => (
-                  <tr key={emp.id} className="hover:bg-slate-850/20 transition-colors group">
+                  <tr key={emp.id} className="hover:bg-slate-50/50 transition-colors group">
                     {/* Legajo */}
-                    <td className="py-4 px-6 font-mono font-medium text-slate-400 group-hover:text-indigo-400 transition-colors">
+                    <td className="py-4 px-6 font-mono font-medium text-slate-600 group-hover:text-emerald-700 transition-colors">
                       {emp.file_number}
                     </td>
                     {/* Nombre */}
-                    <td className="py-4 px-6 font-semibold text-white">
+                    <td className="py-4 px-6 font-semibold text-slate-900">
                       {emp.last_name}, {emp.first_name}
                     </td>
                     {/* Departamento */}
-                    <td className="py-4 px-6 text-slate-400">
+                    <td className="py-4 px-6 text-slate-600">
                       <span className="inline-flex items-center gap-1">
                         <Award className="w-3.5 h-3.5 text-slate-500" />
                         {emp.department_name}
@@ -152,23 +153,23 @@ export default async function EmployeesPage({
                     {/* Contacto */}
                     <td className="py-4 px-6">
                       {emp.email ? (
-                        <span className="flex items-center gap-1.5 text-slate-400">
-                          <Mail className="w-3.5 h-3.5 text-slate-500" />
+                        <span className="flex items-center gap-1.5 text-slate-600">
+                          <Mail className="w-3.5 h-3.5 text-slate-400" />
                           {emp.email}
                         </span>
                       ) : (
-                        <span className="text-slate-650 italic">Sin correo registrado</span>
+                        <span className="text-slate-400 italic">Sin correo registrado</span>
                       )}
                     </td>
                     {/* Estado */}
                     <td className="py-4 px-6 text-center">
                       {emp.is_active ? (
-                        <span className="inline-flex items-center gap-1 text-[10px] text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20 font-medium">
+                        <span className="inline-flex items-center gap-1 text-[10px] text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full border border-emerald-200 font-medium">
                           <CheckCircle2 className="w-3 h-3" />
                           Activo
                         </span>
                       ) : (
-                        <span className="inline-flex items-center gap-1 text-[10px] text-slate-400 bg-slate-950 px-2 py-0.5 rounded-full border border-slate-800 font-medium">
+                        <span className="inline-flex items-center gap-1 text-[10px] text-slate-600 bg-slate-200 px-2 py-0.5 rounded-full border border-slate-300 font-medium">
                           <XCircle className="w-3 h-3" />
                           Inactivo
                         </span>
@@ -179,7 +180,7 @@ export default async function EmployeesPage({
                       <td className="py-4 px-6 text-right">
                         <Link
                           href={`/employees/edit/${emp.id}`}
-                          className="inline-flex items-center justify-center p-2 rounded-lg bg-slate-950 border border-slate-800 text-slate-400 hover:text-white hover:border-indigo-500/50 hover:bg-indigo-500/10 transition-all"
+                          className="inline-flex items-center justify-center p-2 rounded-lg bg-slate-50 border border-slate-300 text-slate-600 hover:text-emerald-700 hover:border-emerald-300/50 hover:bg-emerald-50 transition-all"
                           title="Editar"
                         >
                           <Edit className="w-4 h-4" />
