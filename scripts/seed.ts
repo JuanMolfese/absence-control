@@ -1,20 +1,28 @@
-import { loadEnvConfig } from '@next/env';
 import postgres from 'postgres';
 import bcrypt from 'bcryptjs';
 import fs from 'fs';
 import path from 'path';
+import { getDatabaseSchema, getSearchPath, shouldUseSsl } from '../lib/db-config';
+import { loadLocalEnv } from './load-local-env';
 
 // Cargar variables de entorno desde .env.local
 const projectDir = process.cwd();
-loadEnvConfig(projectDir);
+loadLocalEnv(projectDir);
 
 const connectionString = process.env.DATABASE_URL;
+const schema = getDatabaseSchema();
 if (!connectionString) {
   console.error('DATABASE_URL no está definida en las variables de entorno (.env.local)');
   process.exit(1);
 }
 
-const sql = postgres(connectionString);
+const sql = postgres(connectionString, {
+  ssl: shouldUseSsl(connectionString) ? 'require' : false,
+  connection: {
+    application_name: 'absence-control-seed',
+    search_path: getSearchPath(schema),
+  },
+});
 
 async function main() {
   try {

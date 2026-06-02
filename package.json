@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "db:seed": "tsx scripts/seed.ts"
+    "db:seed": "tsx scripts/seed.ts",
+    "db:sync-remote": "tsx scripts/sync-local-to-remote.ts"
   },
   "dependencies": {
     "@react-pdf/renderer": "^4.5.1",
