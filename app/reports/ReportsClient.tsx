@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useSyncExternalStore } from 'react';
 import * as XLSX from 'xlsx';
 import { Download, FileSpreadsheet, FileText } from 'lucide-react';
 import dynamic from 'next/dynamic';
@@ -11,6 +11,16 @@ const PDFDownloadLink = dynamic(
   () => import('@react-pdf/renderer').then((mod) => mod.PDFDownloadLink),
   { ssr: false }
 );
+
+// Hook para detectar si estamos en el cliente de forma segura (React 18/19+)
+const emptySubscribe = () => () => {};
+function useIsClient() {
+  return useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false
+  );
+}
 
 interface AbsenceReportItem {
   id: string;
@@ -42,12 +52,7 @@ export default function ReportsClient({
   departmentName,
   employeeName,
 }: ReportsClientProps) {
-  const [isClient, setIsClient] = useState(false);
-
-  // Asegurar que estamos en el cliente antes de renderizar los descargadores
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
+  const isClient = useIsClient();
 
   const handleExportExcel = () => {
     // Formatear columnas para la hoja de cálculo
@@ -70,26 +75,38 @@ export default function ReportsClient({
     }));
 
     const worksheet = XLSX.utils.json_to_sheet(formattedData);
+    
+    // Configurar estilos básicos de la hoja
+    worksheet['!ref'] = XLSX.utils.encode_range({
+      s: { c: 0, r: 0 },
+      e: { c: 10, r: formattedData.length }
+    });
+
     const workbook = XLSX.utils.book_new();
     
-    // Auto-ajustar el ancho de las columnas
-    const maxLens = formattedData.reduce((acc, row) => {
-      Object.keys(row).forEach((key) => {
-        const val = row[key as keyof typeof row]?.toString() || '';
-        acc[key] = Math.max(acc[key] || 10, val.length + 2);
-      });
-      return acc;
-    }, {} as Record<string, number>);
+    // Auto-ajustar el ancho de las columnas de forma más inteligente
+    const cols = [
+      { wch: 5 },   // N°
+      { wch: 12 },  // Legajo
+      { wch: 20 },  // Apellido
+      { wch: 20 },  // Nombre
+      { wch: 25 },  // Departamento
+      { wch: 25 },  // Tipo de Ausencia
+      { wch: 15 },  // Fecha Inicio
+      { wch: 15 },  // Fecha Fin
+      { wch: 10 },  // Total Días
+      { wch: 15 },  // Certificado
+      { wch: 40 },  // Observaciones
+    ];
 
-    worksheet['!cols'] = Object.keys(maxLens).map(key => ({
-      wch: maxLens[key]
-    }));
+    worksheet['!cols'] = cols;
 
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Historial de Ausencias');
 
     // Nombre del archivo indicando filtros aplicados
     const areaNameClean = departmentName.replace(/[^a-zA-Z0-9]/g, '_');
-    const fileName = `Reporte_Ausencias_${areaNameClean}_${startDateStr}_al_${endDateStr}.xlsx`;
+    const dateRangeClean = `${startDateStr}_al_${endDateStr}`.replace(/-/g, '');
+    const fileName = `Reporte_Ausencias_${areaNameClean}_${dateRangeClean}.xlsx`;
     
     XLSX.writeFile(workbook, fileName);
   };
@@ -125,7 +142,6 @@ export default function ReportsClient({
           }
           fileName={getPdfFileName()}
         >
-          {/* @ts-ignore */}
           {({ loading }) => (
             <button
               disabled={loading}

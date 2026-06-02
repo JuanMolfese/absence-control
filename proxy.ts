@@ -6,7 +6,7 @@ const JWT_SECRET = new TextEncoder().encode(
   process.env.JWT_SECRET || 'fallback-secret-for-dev-only-change-me'
 );
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Rutas públicas (login, archivos estáticos, api de auth si no es protegida)
@@ -59,7 +59,7 @@ export async function middleware(request: NextRequest) {
   return NextResponse.next();
 }
 
-// Configurar qué rutas activan el middleware
+// Configurar qué rutas activan el proxy
 export const config = {
   matcher: [
     /*

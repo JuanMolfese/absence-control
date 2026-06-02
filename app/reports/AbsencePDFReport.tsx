@@ -23,144 +23,219 @@ interface AbsencePDFReportProps {
   employeeName: string;
 }
 
-// Estilos premium para el PDF (colores en gama azul/slate)
+// Estilos premium para el PDF con estética Light
 const styles = StyleSheet.create({
   page: {
-    padding: 30,
+    padding: 40,
     fontSize: 9,
     fontFamily: 'Helvetica',
-    color: '#1e293b', // slate-800
+    color: '#334155', // slate-700
     backgroundColor: '#ffffff',
   },
-  headerBanner: {
-    backgroundColor: '#0f172a', // slate-900
-    padding: 15,
-    borderRadius: 6,
-    marginBottom: 20,
+  header: {
+    marginBottom: 30,
+    borderBottomWidth: 2,
+    borderBottomColor: '#10b981', // emerald-500
+    paddingBottom: 15,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'flex-end',
+  },
+  logoContainer: {
+    flexDirection: 'row',
     alignItems: 'center',
+    gap: 8,
+  },
+  logoBox: {
+    width: 32,
+    height: 32,
+    backgroundColor: '#065f46', // emerald-800
+    borderRadius: 6,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: '#ffffff',
+    fontWeight: 'bold',
+    fontSize: 14,
   },
   headerTitle: {
-    color: '#ffffff',
-    fontSize: 16,
+    color: '#0f172a', // slate-900
+    fontSize: 20,
     fontWeight: 'bold',
+    letterSpacing: 0.5,
   },
   headerSubtitle: {
-    color: '#94a3b8', // slate-400
-    fontSize: 8,
-    marginTop: 2,
+    color: '#64748b', // slate-500
+    fontSize: 9,
+    marginTop: 4,
   },
-  headerMeta: {
-    color: '#ffffff',
-    fontSize: 8,
+  headerInfo: {
     textAlign: 'right',
   },
-  metaValue: {
-    fontWeight: 'bold',
-    color: '#166534', // emerald-800
+  headerInfoText: {
+    fontSize: 8,
+    color: '#64748b',
+    marginBottom: 2,
   },
-  sectionTitle: {
-    fontSize: 11,
-    fontWeight: 'bold',
+  headerInfoValue: {
     color: '#0f172a',
-    borderBottomWidth: 1,
-    borderBottomColor: '#cbd5e1',
-    paddingBottom: 4,
-    marginBottom: 10,
-    marginTop: 10,
+    fontWeight: 'bold',
   },
   summaryGrid: {
     flexDirection: 'row',
-    gap: 10,
-    marginBottom: 20,
+    gap: 15,
+    marginBottom: 30,
   },
   summaryCard: {
     flex: 1,
     backgroundColor: '#f8fafc', // slate-50
     borderWidth: 1,
-    borderColor: '#e2e8f0',
-    borderRadius: 4,
-    padding: 10,
-    alignItems: 'center',
-  },
-  summaryCardValue: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#065f46', // emerald-800 darker
+    borderColor: '#f1f5f9', // slate-100
+    borderRadius: 12,
+    padding: 15,
+    shadowColor: '#000',
+    shadowOpacity: 0.05,
   },
   summaryCardLabel: {
     fontSize: 7,
     color: '#64748b',
-    marginTop: 2,
     textTransform: 'uppercase',
+    letterSpacing: 1,
+    marginBottom: 4,
+  },
+  summaryCardValue: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#0f172a',
+  },
+  sectionTitle: {
+    fontSize: 12,
+    fontWeight: 'bold',
+    color: '#0f172a',
+    marginBottom: 12,
+    marginTop: 20,
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+  },
+  distributionGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 10,
+    marginBottom: 20,
+  },
+  distributionItem: {
+    width: '48%',
+    backgroundColor: '#f8fafc',
+    padding: 8,
+    borderRadius: 6,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderLeftWidth: 3,
+    borderLeftColor: '#10b981',
+  },
+  distributionLabel: {
+    fontSize: 8,
+    color: '#475569',
+  },
+  distributionValue: {
+    fontSize: 8,
+    fontWeight: 'bold',
+    color: '#0f172a',
+  },
+  signatureSection: {
+    marginTop: 50,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    paddingHorizontal: 20,
+  },
+  signatureBox: {
+    alignItems: 'center',
+    width: 180,
+  },
+  signatureLine: {
+    borderTopWidth: 1,
+    borderTopColor: '#94a3b8',
+    width: '100%',
+    marginBottom: 5,
+  },
+  signatureLabel: {
+    fontSize: 8,
+    color: '#64748b',
   },
   table: {
-    width: 'auto',
-    borderStyle: 'solid',
-    borderWidth: 1,
-    borderColor: '#e2e8f0',
-    borderRadius: 4,
+    width: '100%',
+    borderRadius: 8,
     overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: '#f1f5f9',
   },
   tableRowHeader: {
     flexDirection: 'row',
-    backgroundColor: '#f1f5f9', // slate-100
-    fontWeight: 'bold',
+    backgroundColor: '#f8fafc',
     borderBottomWidth: 1,
-    borderBottomColor: '#cbd5e1',
+    borderBottomColor: '#f1f5f9',
+    paddingVertical: 10,
   },
   tableRow: {
     flexDirection: 'row',
     borderBottomWidth: 1,
-    borderBottomColor: '#f1f5f9',
+    borderBottomColor: '#f8fafc',
+    paddingVertical: 10,
+    alignItems: 'center',
   },
   tableCellHeader: {
-    padding: 6,
+    paddingHorizontal: 8,
     fontWeight: 'bold',
-    color: '#334155',
+    color: '#475569',
+    fontSize: 8,
+    textTransform: 'uppercase',
   },
   tableCell: {
-    padding: 6,
-    color: '#475569',
+    paddingHorizontal: 8,
+    color: '#334155',
+    fontSize: 8,
   },
-  colEmpleado: { width: '25%' },
-  colDpto: { width: '20%' },
+  colEmpleado: { width: '28%' },
+  colDpto: { width: '18%' },
   colMotivo: { width: '22%' },
-  colPeriodo: { width: '23%' },
-  colDias: { width: '10%', textAlign: 'center' },
+  colPeriodo: { width: '24%' },
+  colDias: { width: '8%', textAlign: 'center' },
   
   empName: {
     fontWeight: 'bold',
     color: '#0f172a',
+    fontSize: 9,
   },
   empLegajo: {
     fontSize: 7,
-    color: '#64748b',
-    marginTop: 1,
+    color: '#94a3b8',
+    marginTop: 2,
   },
-  certBadgePending: {
-    color: '#dc2626', // red-600
-    fontSize: 7,
+  badge: {
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 4,
+    fontSize: 6,
     fontWeight: 'bold',
+    marginTop: 4,
   },
-  certBadgePresented: {
-    color: '#16a34a', // green-600
-    fontSize: 7,
-    fontWeight: 'bold',
+  badgePresented: {
+    backgroundColor: '#ecfdf5',
+    color: '#065f46',
   },
-  certBadgeNA: {
-    color: '#64748b',
-    fontSize: 7,
+  badgePending: {
+    backgroundColor: '#fef2f2',
+    color: '#991b1b',
   },
   footer: {
     position: 'absolute',
-    bottom: 25,
-    left: 30,
-    right: 30,
+    bottom: 30,
+    left: 40,
+    right: 40,
+    paddingTop: 15,
     borderTopWidth: 1,
-    borderTopColor: '#e2e8f0',
-    paddingTop: 8,
+    borderTopColor: '#f1f5f9',
     flexDirection: 'row',
     justifyContent: 'space-between',
     fontSize: 7,
@@ -182,7 +257,7 @@ export default function AbsencePDFReport({
     const localDate = new Date(d.getTime() + userTimezoneOffset);
     return localDate.toLocaleDateString('es-ES', {
       day: 'numeric',
-      month: 'short',
+      month: 'long',
       year: 'numeric',
     });
   };
@@ -194,90 +269,127 @@ export default function AbsencePDFReport({
     ab => ab.requires_certificate && !ab.certificate_attached
   ).length;
 
+  // Docentes únicos afectados
+  const docentesAfectados = new Set(data.map(ab => ab.file_number)).size;
+
+  // Distribución por motivo
+  const distribucionMotivos = data.reduce((acc, curr) => {
+    acc[curr.absence_type_name] = (acc[curr.absence_type_name] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
+
   return (
-    <Document>
+    <Document title={`Reporte de Ausencias - ${formatDate(new Date())}`}>
       <Page size="A4" style={styles.page}>
-        {/* Banner de Cabecera */}
-        <View style={styles.headerBanner}>
+        {/* Cabecera Moderna */}
+        <View style={styles.header}>
           <View>
-            <Text style={styles.headerTitle}>Reporte de Ausentismo</Text>
-            <Text style={styles.headerSubtitle}>Generado por el Sistema de Control de Ausencias de E.P. n° 15 de Tres Arroyos</Text>
+            <View style={styles.logoContainer}>
+              <View style={styles.logoBox}><Text>15</Text></View>
+              <Text style={styles.headerTitle}>Gestión de Ausencias</Text>
+            </View>
+            <Text style={styles.headerSubtitle}>Escuela Primaria N° 15 - Tres Arroyos</Text>
           </View>
-          <View>
-            <Text style={styles.headerMeta}>
-              Periodo: <Text style={styles.metaValue}>{formatDate(startDateStr)}</Text> al <Text style={styles.metaValue}>{formatDate(endDateStr)}</Text>
+          <View style={styles.headerInfo}>
+            <Text style={styles.headerInfoText}>
+              Periodo: <Text style={styles.headerInfoValue}>{formatDate(startDateStr)} - {formatDate(endDateStr)}</Text>
             </Text>
-            <Text style={[styles.headerMeta, { marginTop: 4 }]}>
-              Filtro Área: <Text style={styles.metaValue}>{departmentName}</Text>
+            <Text style={styles.headerInfoText}>
+              Área: <Text style={styles.headerInfoValue}>{departmentName}</Text>
+            </Text>
+            <Text style={styles.headerInfoText}>
+              Fecha Emisión: <Text style={styles.headerInfoValue}>{formatDate(new Date())}</Text>
             </Text>
           </View>
         </View>
 
-        {/* Tarjetas de Resumen */}
+        {/* Resumen Ejecutivo */}
         <View style={styles.summaryGrid}>
           <View style={styles.summaryCard}>
-            <Text style={styles.summaryCardValue}>{totalAusencias}</Text>
             <Text style={styles.summaryCardLabel}>Total Registros</Text>
+            <Text style={styles.summaryCardValue}>{totalAusencias}</Text>
           </View>
           <View style={styles.summaryCard}>
-            <Text style={styles.summaryCardValue}>{totalDias}</Text>
             <Text style={styles.summaryCardLabel}>Días Acumulados</Text>
+            <Text style={styles.summaryCardValue}>{totalDias}</Text>
           </View>
           <View style={styles.summaryCard}>
-            <Text style={[styles.summaryCardValue, { color: certificadosPendientes > 0 ? '#dc2626' : '#16a34a' }]}>
-              {certificadosPendientes}
-            </Text>
-            <Text style={styles.summaryCardLabel}>Pendientes Certif.</Text>
+            <Text style={styles.summaryCardLabel}>Docentes Afectados</Text>
+            <Text style={styles.summaryCardValue}>{docentesAfectados}</Text>
           </View>
+          {certificadosPendientes > 0 && (
+            <View style={styles.summaryCard}>
+              <Text style={styles.summaryCardLabel}>Pendientes Certificado</Text>
+              <Text style={[styles.summaryCardValue, { color: '#b91c1c' }]}>
+                {certificadosPendientes}
+              </Text>
+            </View>
+          )}
         </View>
 
-        {/* Listado de Registros */}
+        {/* Distribución por Motivo */}
+        {totalAusencias > 0 && (
+          <View>
+            <Text style={styles.sectionTitle}>Distribución por Motivo</Text>
+            <View style={styles.distributionGrid}>
+              {Object.entries(distribucionMotivos).map(([motivo, cantidad]) => (
+                <View key={motivo} style={styles.distributionItem}>
+                  <Text style={styles.distributionLabel}>{motivo}</Text>
+                  <Text style={styles.distributionValue}>{cantidad} {cantidad === 1 ? 'caso' : 'casos'}</Text>
+                </View>
+              ))}
+            </View>
+          </View>
+        )}
+
+        {/* Detalle de Tabla */}
         <Text style={styles.sectionTitle}>Detalle de Inasistencias</Text>
         <View style={styles.table}>
-          {/* Header de la Tabla */}
           <View style={styles.tableRowHeader}>
             <Text style={[styles.tableCellHeader, styles.colEmpleado]}>Docente</Text>
-            <Text style={[styles.tableCellHeader, styles.colDpto]}>Departamento</Text>
-            <Text style={[styles.tableCellHeader, styles.colMotivo]}>Motivo de Ausencia</Text>
+            <Text style={[styles.tableCellHeader, styles.colDpto]}>Área</Text>
+            <Text style={[styles.tableCellHeader, styles.colMotivo]}>Motivo</Text>
             <Text style={[styles.tableCellHeader, styles.colPeriodo]}>Periodo</Text>
             <Text style={[styles.tableCellHeader, styles.colDias]}>Días</Text>
           </View>
 
-          {/* Filas */}
-          {data.length === 0 ? (
-            <View style={{ padding: 15, alignItems: 'center' }}>
-              <Text style={{ color: '#64748b', fontSize: 8 }}>No se encontraron registros en el periodo seleccionado.</Text>
-            </View>
-          ) : (
-            data.map((ab, i) => (
-              <View key={ab.id || i} style={styles.tableRow}>
-                <View style={[styles.tableCell, styles.colEmpleado]}>
-                  <Text style={styles.empName}>{ab.last_name}, {ab.first_name}</Text>
-                  <Text style={styles.empLegajo}>{ab.file_number}</Text>
-                </View>
-                <Text style={[styles.tableCell, styles.colDpto]}>{ab.department_name}</Text>
-                <View style={[styles.tableCell, styles.colMotivo]}>
-                  <Text>{ab.absence_type_name}</Text>
-                  {!ab.requires_certificate ? (
-                    <Text style={styles.certBadgeNA}>Certificado: N/A</Text>
-                  ) : ab.certificate_attached ? (
-                    <Text style={styles.certBadgePresented}>Certificado: Entregado</Text>
-                  ) : (
-                    <Text style={styles.certBadgePending}>Certificado: PENDIENTE</Text>
-                  )}
-                </View>
-                <Text style={[styles.tableCell, styles.colPeriodo]}>
-                  {formatDate(ab.start_date)} al {formatDate(ab.end_date)}
-                </Text>
-                <Text style={[styles.tableCell, styles.colDias]}>{ab.total_days}</Text>
+          {data.map((item, index) => (
+            <View key={item.id} style={[styles.tableRow, { backgroundColor: index % 2 === 0 ? '#ffffff' : '#fafafa' }]}>
+              <View style={[styles.tableCell, styles.colEmpleado]}>
+                <Text style={styles.empName}>{item.last_name}, {item.first_name}</Text>
+                <Text style={styles.empLegajo}>Legajo: {item.file_number}</Text>
               </View>
-            ))
-          )}
+              <Text style={[styles.tableCell, styles.colDpto]}>{item.department_name}</Text>
+              <View style={[styles.tableCell, styles.colMotivo]}>
+                <Text>{item.absence_type_name}</Text>
+                {item.requires_certificate && (
+                  <View style={[styles.badge, item.certificate_attached ? styles.badgePresented : styles.badgePending]}>
+                    <Text>{item.certificate_attached ? 'CERTIFICADO PRESENTADO' : 'CERTIFICADO PENDIENTE'}</Text>
+                  </View>
+                )}
+              </View>
+              <Text style={[styles.tableCell, styles.colPeriodo]}>
+                {formatDate(item.start_date)} al {formatDate(item.end_date)}
+              </Text>
+              <Text style={[styles.tableCell, styles.colDias, { fontWeight: 'bold' }]}>{item.total_days}</Text>
+            </View>
+          ))}
         </View>
 
-        {/* Footer con Paginación */}
+        {/* Espacio para Firmas */}
+        <View style={styles.signatureSection} wrap={false}>
+          <View style={styles.signatureBox}>
+            <View style={styles.signatureLine} />
+            <Text style={styles.signatureLabel}>Firma del Docente</Text>
+          </View>
+          <View style={styles.signatureBox}>
+            <View style={styles.signatureLine} />
+            <Text style={styles.signatureLabel}>Sello y Firma Autoridad</Text>
+          </View>
+        </View>
+
         <View style={styles.footer} fixed>
-          <Text>Confidencial - Reporte Interno de Asistencia</Text>
+          <Text>Documento oficial de control de asistencia - EP N° 15</Text>
           <Text render={({ pageNumber, totalPages }) => `Página ${pageNumber} de ${totalPages}`} />
         </View>
       </Page>

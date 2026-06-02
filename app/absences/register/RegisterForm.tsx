@@ -28,17 +28,10 @@ export default function RegisterForm({ employees, absenceTypes }: RegisterFormPr
   const [state, formAction, isPending] = useActionState(registerAbsence, initialState);
   
   const [selectedTypeId, setSelectedTypeId] = useState<number | null>(null);
-  const [requiresCert, setRequiresCert] = useState(false);
 
-  // Monitorear si el tipo de ausencia requiere certificado
-  useEffect(() => {
-    if (selectedTypeId === null) {
-      setRequiresCert(false);
-      return;
-    }
-    const selected = absenceTypes.find(t => t.id === selectedTypeId);
-    setRequiresCert(selected ? selected.requires_certificate : false);
-  }, [selectedTypeId, absenceTypes]);
+  // Derivar si el tipo de ausencia requiere certificado directamente en el render
+  const selectedType = absenceTypes.find(t => t.id === selectedTypeId);
+  const requiresCert = selectedType ? selectedType.requires_certificate : false;
 
   // Obtener fecha actual en formato YYYY-MM-DD
   const getTodayString = () => {

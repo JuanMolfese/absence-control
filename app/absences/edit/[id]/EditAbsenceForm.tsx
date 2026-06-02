@@ -5,6 +5,7 @@ import { updateAbsence, deleteAbsence } from '../../actions';
 import Link from 'next/link';
 import { Loader2, ArrowLeft, Save, AlertCircle, Trash2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import Modal from '@/app/components/Modal';
 
 interface Employee {
   id: string;
@@ -43,17 +44,24 @@ export default function EditAbsenceForm({ absence, employees, absenceTypes }: Ed
   const [isDeleting, setIsDeleting] = useState(false);
 
   const [selectedTypeId, setSelectedTypeId] = useState<number | null>(absence.absence_type_id);
-  const [requiresCert, setRequiresCert] = useState(false);
 
-  // Monitorear si el tipo de ausencia requiere certificado
-  useEffect(() => {
-    if (selectedTypeId === null) {
-      setRequiresCert(false);
-      return;
-    }
-    const selected = absenceTypes.find(t => t.id === selectedTypeId);
-    setRequiresCert(selected ? selected.requires_certificate : false);
-  }, [selectedTypeId, absenceTypes]);
+  // Derivar si el tipo de ausencia requiere certificado directamente en el render
+  const selectedType = absenceTypes.find(t => t.id === selectedTypeId);
+  const requiresCert = selectedType ? selectedType.requires_certificate : false;
+
+  // Estados para el Modal
+  const [modalConfig, setModalConfig] = useState<{
+    isOpen: boolean;
+    title: string;
+    message: string;
+    type: 'info' | 'warning' | 'error' | 'success' | 'confirm';
+    onConfirm?: () => void;
+  }>({
+    isOpen: false,
+    title: '',
+    message: '',
+    type: 'info',
+  });
 
   // Formatear fecha para el input type="date" (YYYY-MM-DD)
   const formatDateForInput = (dateInput: Date | string) => {
@@ -65,24 +73,43 @@ export default function EditAbsenceForm({ absence, employees, absenceTypes }: Ed
     return `${year}-${month}-${day}`;
   };
 
-  const handleDelete = async () => {
-    if (!confirm('¿Estás seguro de que deseas eliminar este registro de ausencia? Esta acción no se puede deshacer.')) {
-      return;
-    }
-
+  const confirmDelete = async () => {
     setIsDeleting(true);
     try {
       await deleteAbsence(absence.id);
       router.push('/absences');
       router.refresh();
     } catch (error) {
-      alert('Error al intentar eliminar la ausencia.');
+      setModalConfig({
+        isOpen: true,
+        title: 'Error',
+        message: 'Error al intentar eliminar la ausencia.',
+        type: 'error',
+      });
       setIsDeleting(false);
     }
   };
 
+  const handleDelete = () => {
+    setModalConfig({
+      isOpen: true,
+      title: 'Confirmar Eliminación',
+      message: '¿Estás seguro de que deseas eliminar este registro de ausencia? Esta acción no se puede deshacer.',
+      type: 'confirm',
+      onConfirm: confirmDelete,
+    });
+  };
+
   return (
     <div className="max-w-2xl mx-auto space-y-6 animate-fade-in">
+      <Modal
+        isOpen={modalConfig.isOpen}
+        onClose={() => setModalConfig({ ...modalConfig, isOpen: false })}
+        onConfirm={modalConfig.onConfirm}
+        title={modalConfig.title}
+        message={modalConfig.message}
+        type={modalConfig.type}
+      />
       {/* Header */}
       <div className="flex items-center justify-between gap-4">
         <div className="flex items-center gap-4">
