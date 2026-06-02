@@ -92,13 +92,7 @@ export default function LoginPage() {
               <span>Iniciar Sesión</span>
             )}
           </button>
-        </form>
-
-        <div className="mt-8 pt-6 border-t border-slate-200 text-center text-xs text-slate-600">
-          <p>Credenciales de prueba:</p>
-          <p className="mt-1 font-mono text-slate-700">admin@absence.com / admin123 (Admin)</p>
-          <p className="font-mono text-slate-700">reader@absence.com / reader123 (Lector)</p>
-        </div>
+        </form>       
       </div>
     </div>
   );
